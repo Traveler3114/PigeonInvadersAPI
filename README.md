@@ -35,7 +35,7 @@ Pigeon Invaders API is a backend service designed to support the Pigeon Invaders
 
 ## 🛠 Technology Stack
 
-- **Framework**: ASP.NET Core 8.0
+- **Framework**: ASP.NET Core (.NET 8.0)
 - **Language**: C# with .NET 8.0
 - **Database**: MySQL
 - **ORM/Database Access**: MySql.Data (ADO.NET)
@@ -112,13 +112,20 @@ private string connectionString = "Server=localhost;Database=PigeonInvadersDB;Us
 **Security Note**: ⚠️ **CRITICAL**: The connection string in the repository currently contains real database credentials that are exposed in version control. This is a serious security vulnerability. You must immediately:
 - Change your database password
 - Remove hardcoded credentials from the code
-- Use environment variables or configuration files (excluded from git)
+- Never commit credentials to version control
 
-For secure credential management, consider:
-- Using environment variables
-- Storing credentials in `appsettings.json` (excluded from version control)
-- Using Azure Key Vault or similar secret management solutions
-- Implementing user secrets for development
+**Recommended secure configuration patterns for ASP.NET Core**:
+
+For **Development**:
+- Use [.NET User Secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets) to store credentials locally
+- Initialize: `dotnet user-secrets init`
+- Set connection string: `dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost;Database=PigeonInvadersDB;User ID=your_username;Password=your_password;"`
+
+For **Production**:
+- Use environment variables injected by your hosting platform
+- Use [Azure Key Vault](https://learn.microsoft.com/aspnet/core/security/key-vault-configuration) for Azure deployments
+- Use AWS Secrets Manager for AWS deployments
+- Configure through hosting environment (Azure App Service, IIS, Docker, etc.)
 
 ### App Settings
 
