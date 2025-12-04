@@ -35,8 +35,7 @@ Pigeon Invaders API is a backend service designed to support the Pigeon Invaders
 
 ## 🛠 Technology Stack
 
-- **Framework**: ASP.NET Core (.NET 8.0)
-- **Language**: C# with .NET 8.0
+- **Framework**: ASP.NET Core 8.0 (C#)
 - **Database**: MySQL
 - **ORM/Database Access**: MySql.Data (ADO.NET)
 - **API Documentation**: Swashbuckle.AspNetCore (Swagger/OpenAPI)
@@ -103,10 +102,21 @@ Before you begin, ensure you have the following installed:
 
 ### Database Connection
 
-Update the connection string in `MySqlConnectionManager.cs` with your MySQL credentials:
-
+**Current Implementation** (Needs Updating):
+The current code has hardcoded credentials in `MySqlConnectionManager.cs`:
 ```csharp
 private string connectionString = "Server=localhost;Database=PigeonInvadersDB;User ID=your_username;Password=your_password;";
+```
+
+**Recommended Implementation** (Using Configuration):
+```csharp
+private readonly string connectionString;
+
+public MySqlConnectionManager(IConfiguration configuration)
+{
+    connectionString = configuration.GetConnectionString("DefaultConnection") 
+        ?? throw new InvalidOperationException("Connection string not found.");
+}
 ```
 
 **Security Note**: ⚠️ **CRITICAL**: The connection string in the repository currently contains real database credentials that are exposed in version control. This is a serious security vulnerability. You must immediately:
@@ -376,6 +386,8 @@ Currently, the project does not include unit tests. To add testing:
 ## 📚 Swagger Documentation
 
 When running in development mode, Swagger UI is automatically enabled and provides:
+
+**Note**: By default in ASP.NET Core, Swagger is only enabled in the Development environment for security reasons. In production, you'll need to explicitly configure it in `Program.cs` if needed.
 
 - Interactive API documentation
 - Ability to test endpoints directly from the browser
