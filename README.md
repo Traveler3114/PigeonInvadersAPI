@@ -109,7 +109,12 @@ Update the connection string in `MySqlConnectionManager.cs` with your MySQL cred
 private string connectionString = "Server=localhost;Database=PigeonInvadersDB;User ID=your_username;Password=your_password;";
 ```
 
-**Security Note**: ⚠️ The connection string currently contains hardcoded credentials. For production deployments, consider:
+**Security Note**: ⚠️ **CRITICAL**: The connection string in the repository currently contains real database credentials that are exposed in version control. This is a serious security vulnerability. You must immediately:
+- Change your database password
+- Remove hardcoded credentials from the code
+- Use environment variables or configuration files (excluded from git)
+
+For secure credential management, consider:
 - Using environment variables
 - Storing credentials in `appsettings.json` (excluded from version control)
 - Using Azure Key Vault or similar secret management solutions
@@ -139,7 +144,7 @@ dotnet watch run
 ```
 
 The API will start on:
-- HTTPS: `https://localhost:5181`
+- HTTPS: `https://localhost:7189`
 - HTTP: `http://localhost:5181`
 
 ### Production Mode
@@ -371,9 +376,8 @@ When running in development mode, Swagger UI is automatically enabled and provid
 - Example values
 
 **Access Swagger UI**:
-```
-http://localhost:5181/swagger
-```
+- HTTPS: `https://localhost:7189/swagger`
+- HTTP: `http://localhost:5181/swagger`
 
 **Features**:
 - Try out API endpoints without writing code
@@ -464,7 +468,7 @@ This project is available for use and modification. Please check with the reposi
 ## 🔗 Links
 
 - **Repository**: [https://github.com/Traveler3114/PigeonInvadersAPI](https://github.com/Traveler3114/PigeonInvadersAPI)
-- **ASP.NET Core Documentation**: [https://docs.microsoft.com/aspnet/core](https://docs.microsoft.com/aspnet/core)
+- **ASP.NET Core Documentation**: [https://learn.microsoft.com/aspnet/core](https://learn.microsoft.com/aspnet/core)
 - **MySQL Documentation**: [https://dev.mysql.com/doc/](https://dev.mysql.com/doc/)
 - **Swagger/OpenAPI**: [https://swagger.io/](https://swagger.io/)
 
